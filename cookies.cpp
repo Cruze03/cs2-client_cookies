@@ -83,7 +83,7 @@ void LoadConfig() {
 	pKVConfig = pKVConfig->FindKey("cookies", false);
 	char szPath[256];
 	if (pKVConfig) {
-		const char* szDriver = pKVConfig->GetString("driver", "sqlite");
+		const char* szDriver = pKVConfig->GetString("driver", "mysql");
 		szDatabase = pKVConfig->GetString("database", "cookies");
 		if(!strcmp(szDriver, "mysql")) {
 			MySQLConnectionInfo info;
@@ -141,10 +141,10 @@ void ProcessQueryResult(int iSlot, ISQLQuery* pQuery)
                 std::string sCookieName = pResult->GetString(2);
                 std::string sCookieData = pResult->GetString(3);
                 g_mapCookies[iSlot][sCookieName] = sCookieData;
-				g_pCookiesApi->CallClientCookieLoaded(iSlot);
             }
         }
     }
+	g_pCookiesApi->CallClientCookieLoaded(iSlot);
 }
 
 void GetClientCookies(int iSlot, uint64 iSteamID64)
