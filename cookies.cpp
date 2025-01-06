@@ -214,6 +214,7 @@ void CookiesApi::SetCookie(int iSlot, const char* sCookieName, const char* sData
 		g_SMAPI->Format(szBuffer, sizeof(szBuffer), "INSERT INTO client_cookies (steamid, cookie_name, cookie_data) VALUES (%lld, '%s', '%s') ON DUPLICATE KEY UPDATE cookie_data = '%s'", engine->GetClientXUID(iSlot), sCookieName, sData, sData);
 		g_pConnectionMysql->Query(szBuffer, [](ISQLQuery* pQuery){});
 	}
+	g_mapCookies[iSlot][sCookieName] = sData;
 }
 
 const char* CookiesApi::GetCookie(int iSlot, const char* sCookieName)
@@ -234,7 +235,7 @@ const char* cookies::GetLicense()
 
 const char* cookies::GetVersion()
 {
-	return "1.0";
+	return "1.1";
 }
 
 const char* cookies::GetDate()
